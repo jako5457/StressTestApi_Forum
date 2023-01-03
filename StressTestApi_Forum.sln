@@ -5,6 +5,8 @@ VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StressTestApi_Forum", "StressTestApi_Forum\StressTestApi_Forum.csproj", "{368C05A7-AD10-4BA2-BB78-9C5059F8FA49}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{A7C77E90-78AB-44C8-BF24-FB1ABE80BA71}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{368C05A7-AD10-4BA2-BB78-9C5059F8FA49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{368C05A7-AD10-4BA2-BB78-9C5059F8FA49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{368C05A7-AD10-4BA2-BB78-9C5059F8FA49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7C77E90-78AB-44C8-BF24-FB1ABE80BA71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7C77E90-78AB-44C8-BF24-FB1ABE80BA71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7C77E90-78AB-44C8-BF24-FB1ABE80BA71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7C77E90-78AB-44C8-BF24-FB1ABE80BA71}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

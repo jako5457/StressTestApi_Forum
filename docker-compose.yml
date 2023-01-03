@@ -1,0 +1,11 @@
+version: '3.4'
+
+services:
+  stresstestapi_forum:
+    image: ${DOCKER_REGISTRY-}stresstestapiforum
+    build:
+      context: .
+      dockerfile: StressTestApi_Forum/Dockerfile
+  database:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    env_file: SqlServer.env
