@@ -4,7 +4,8 @@ namespace StressTestApi_Forum.Services
 {
     public class FakeJitterService : IFakeJitterService
     {
-        const int occourance = 1;
+        //Occurrance of errors (Higher = More errors)
+        const int occourance = 9;
 
         RandomNumberGenerator _RandomNumberGenerator;
 
@@ -26,14 +27,24 @@ namespace StressTestApi_Forum.Services
             };
         }
 
+        public int RandomDelay { 
+            get {
+                byte[] data = new byte[20];
+
+                _RandomNumberGenerator.GetBytes(data);
+
+                return data.Select(b => Convert.ToInt32(b)).Sum();
+            } 
+        }
+
         public bool HasError()
         {
             byte[] data = new byte[100];
             _RandomNumberGenerator.GetBytes(data);
 
-            int count = data.Where(b => b < occourance).Count();
+            int count = data.Where(b => b < (255 / (occourance - 1))).Count();
 
-            return count < occourance;
+            return count < (100 / occourance - 2);
         }
 
         public FakeErrorResponse GetErrorResponse()
