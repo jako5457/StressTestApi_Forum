@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using RobotsTxt;
+using StressTestApi_Forum.Configurations;
 using System.Text;
 
 namespace StressTestApi_Forum
@@ -21,25 +22,46 @@ namespace StressTestApi_Forum
         {
             _Logger.LogInformation("A bot has requested robots.txt");
 
+            RobotConfiguration OverrideConfig = new();
+            _Configuration.Bind("RobotOverride",OverrideConfig);
+
             var builder = new RobotsTxtOptionsBuilder();
 
-            if (_Environment.IsDevelopment())
+            if (!OverrideConfig.Enabled)
             {
-                builder = builder.AddSection(options => options
-                                                            .AddComment("This is a development build.")
-                                                            .AddUserAgent("*")
-                                                            .Allow("/"));
+                if (_Environment.IsDevelopment())
+                {
+                    builder = builder.AddSection(options => options
+                                              .AddComment("This is a development build.")
+                                              .AddUserAgent("*")
+                                              .Allow("/"));
+                }
+                else
+                {
+                    builder = builder.AddSection(options => options
+                                        .AddComment("Allow google to crawl the website.")
+                                        .AddUserAgent("Googlebot")
+                                        .Allow("/"))
+                                        .DenyAll();
+                }
             }
             else
             {
-                builder = builder
-                    .AddSection(options => options
-                                    .AddComment("Allow google to crawl the website.")
-                                    .AddUserAgent("Googlebot")
-                                    .Allow("/")
-                )
-                    .DenyAll();
-            }
+                if (OverrideConfig.AllowAll)
+                {
+                    builder = builder.AddSection(options => options
+                                             .AddComment("Overrided")
+                                             .AddUserAgent("*")
+                                             .Allow("/"));
+                }
+                else
+                {
+                    builder = builder.AddSection(options => options
+                                            .AddComment("Overrided")
+                                            .AddUserAgent("*")
+                                            .Disallow("/"));
+                }
+            }     
 
             var options = builder.Build();
             var content = options.ToString();

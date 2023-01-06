@@ -15,5 +15,6 @@
     <None Include="docker-compose.yml" />
     <None Include=".dockerignore" />
     <None Include="SqlServer.env" />
+    <None Include="StresstestApi.env" />
   </ItemGroup>
 </Project>

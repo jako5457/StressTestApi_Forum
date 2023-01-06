@@ -6,6 +6,7 @@ services:
     build:
       context: .
       dockerfile: StressTestApi_Forum/Dockerfile
+    env_file: StresstestApi.env
   database:
     image: mcr.microsoft.com/mssql/server:2022-latest
     env_file: SqlServer.env
