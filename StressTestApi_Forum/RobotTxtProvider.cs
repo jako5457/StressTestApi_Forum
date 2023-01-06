@@ -39,10 +39,16 @@ namespace StressTestApi_Forum
                 else
                 {
                     builder = builder.AddSection(options => options
-                                        .AddComment("Allow google to crawl the website.")
+                                        .AddComment("Allow google to crawl the webapi")
                                         .AddUserAgent("Googlebot")
-                                        .Allow("/"))
-                                        .DenyAll();
+                                        .Allow("/")
+                                     )
+                                     .AddSection(options => options
+                                        .AddComment("Allow Duckduckgo to crawl the webapi")
+                                        .AddUserAgent("duckduckbot")
+                                        .Allow("/")
+                                     )
+                                     .DenyAll();
                 }
             }
             else
