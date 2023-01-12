@@ -5,7 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace StressTestApi_Forum.Services.Posts
 {
-    public class PostService
+    public class PostService : IPostService
     {
         private readonly ForumContext _ForumContext;
 
@@ -34,7 +34,7 @@ namespace StressTestApi_Forum.Services.Posts
 
         public async Task<Post?> GetPostAsync(Guid PostId)
         {
-            return await _ForumContext.Posts.Where(p => p.PostId== PostId).FirstOrDefaultAsync();
+            return await _ForumContext.Posts.Where(p => p.PostId == PostId).FirstOrDefaultAsync();
         }
 
         public async Task<Post> CreatePostAsync(Post post)
@@ -59,7 +59,7 @@ namespace StressTestApi_Forum.Services.Posts
             }
             else
             {
-               throw new Exception("User not found");
+                throw new Exception("User not found");
             }
 
             return post;
