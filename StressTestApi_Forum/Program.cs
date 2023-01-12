@@ -1,7 +1,7 @@
 using StressTestApi_Forum.Middleware;
-using StressTestApi_Forum.Services;
 using RobotsTxt;
 using StressTestApi_Forum;
+using StressTestApi_Forum.Services.FakeJitter;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +13,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IRobotsTxtProvider, RobotTxtProvider>();
-
 
 var app = builder.Build();
 

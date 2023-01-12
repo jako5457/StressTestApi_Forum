@@ -72,7 +72,7 @@ namespace StressTestApi_Forum
             var options = builder.Build();
             var content = options.ToString();
             var buffer = Encoding.UTF8.GetBytes(content).AsMemory();
-            return new RobotsTxtResult(buffer,10000);
+            return new RobotsTxtResult(buffer,1000);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace StressTestApi_Forum.Services
+﻿namespace StressTestApi_Forum.Services.FakeJitter
 {
     public interface IFakeJitterService
     {

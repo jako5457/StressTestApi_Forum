@@ -1,4 +1,4 @@
-﻿using StressTestApi_Forum.Services;
+﻿using StressTestApi_Forum.Services.FakeJitter;
 using System.Text;
 
 namespace StressTestApi_Forum.Middleware

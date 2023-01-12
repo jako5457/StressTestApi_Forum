@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 
-namespace StressTestApi_Forum.Services
+namespace StressTestApi_Forum.Services.FakeJitter
 {
     public class FakeJitterService : IFakeJitterService
     {
@@ -27,14 +27,16 @@ namespace StressTestApi_Forum.Services
             };
         }
 
-        public int RandomDelay { 
-            get {
+        public int RandomDelay
+        {
+            get
+            {
                 byte[] data = new byte[20];
 
                 _RandomNumberGenerator.GetBytes(data);
 
                 return data.Select(b => Convert.ToInt32(b)).Sum();
-            } 
+            }
         }
 
         public bool HasError()
@@ -42,9 +44,9 @@ namespace StressTestApi_Forum.Services
             byte[] data = new byte[100];
             _RandomNumberGenerator.GetBytes(data);
 
-            int count = data.Where(b => b < (255 / (occourance - 1))).Count();
+            int count = data.Where(b => b < 255 / (occourance - 1)).Count();
 
-            return count < (100 / occourance - 2);
+            return count < 100 / occourance - 2;
         }
 
         public FakeErrorResponse GetErrorResponse()
@@ -52,7 +54,7 @@ namespace StressTestApi_Forum.Services
             byte[] data = new byte[fakeErrorResponses.Count() - 1];
             _RandomNumberGenerator.GetBytes(data);
 
-            int ErrorIndex = data.Where(b => b < (255 / 2)).Count();
+            int ErrorIndex = data.Where(b => b < 255 / 2).Count();
 
             return fakeErrorResponses[ErrorIndex];
         }
