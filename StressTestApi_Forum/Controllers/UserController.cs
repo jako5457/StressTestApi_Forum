@@ -51,7 +51,7 @@ namespace StressTestApi_Forum.Controllers
 
         [HttpPost]
         [Route("create")]
-        [ProducesResponseType(201)]
+        [ProducesResponseType(statusCode:201,type:typeof(UserDto))]
         [ProducesResponseType(422)]
         public async Task<IActionResult> CreateUserAsync(UserToBeCreatedDto userToBeCreated)
         {
@@ -68,5 +68,7 @@ namespace StressTestApi_Forum.Controllers
                 return StatusCode(422, e.Message);
             }
         }
+
+       
     }
 }

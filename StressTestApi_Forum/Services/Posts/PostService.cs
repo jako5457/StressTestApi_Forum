@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using StressTestApi_Forum.Models;
 using StressTestApi_Forum.Services.Efcore;
 using StressTestApi_Forum.Services.Efcore.Entities;
 using System.Security.Cryptography.X509Certificates;
@@ -15,7 +16,7 @@ namespace StressTestApi_Forum.Services.Posts
         }
 
 
-        public async Task<IEnumerable<Post>> GetPostsAsync(PostFilterSettings FilterSettings)
+        public async Task<IEnumerable<PostDto>> GetPostsAsync(PostFilterSettings FilterSettings)
         {
             var query = _ForumContext.Posts.AsQueryable();
 
@@ -29,15 +30,15 @@ namespace StressTestApi_Forum.Services.Posts
                 query.Where(p => p.Title.Contains(FilterSettings.query) || p.Body.Contains(FilterSettings.query));
             }
 
-            return await query.AsNoTracking().ToListAsync();
+            return await query.Include(p => p.Author).Select(p => p.ToPostDto()).AsNoTracking().ToListAsync();
         }
 
-        public async Task<Post?> GetPostAsync(Guid PostId)
+        public async Task<PostDto?> GetPostAsync(Guid PostId)
         {
-            return await _ForumContext.Posts.Where(p => p.PostId == PostId).FirstOrDefaultAsync();
+            return await _ForumContext.Posts.Where(p => p.PostId == PostId).Select(p => p.ToPostDto()).FirstOrDefaultAsync();
         }
 
-        public async Task<Post> CreatePostAsync(Post post)
+        public async Task<PostDto> CreatePostAsync(Post post)
         {
             post.PostId = Guid.NewGuid();
 
@@ -45,10 +46,12 @@ namespace StressTestApi_Forum.Services.Posts
 
             await _ForumContext.SaveChangesAsync();
 
-            return post;
+            await _ForumContext.Entry(post).Navigation(nameof(post.Author)).LoadAsync();
+
+            return post.ToPostDto();
         }
 
-        public async Task<Post> RemovePostAsync(Guid PostId)
+        public async Task RemovePostAsync(Guid PostId)
         {
             var post = await _ForumContext.Posts.Where(p => p.PostId == PostId).FirstOrDefaultAsync();
 
@@ -61,8 +64,6 @@ namespace StressTestApi_Forum.Services.Posts
             {
                 throw new Exception("User not found");
             }
-
-            return post;
         }
     }
 }
