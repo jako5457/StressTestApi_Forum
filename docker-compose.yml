@@ -9,6 +9,8 @@ services:
     depends_on:
         - database
     env_file: StresstestApi.env
+    ports:
+        - 8080:80
   database:
     image: mcr.microsoft.com/mssql/server:2022-latest
     env_file: SqlServer.env
